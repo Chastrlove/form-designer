@@ -1,4 +1,4 @@
-import { action } from "mobx";
+import { action, observable } from "mobx";
 
 export class EditorStore {
   /**
@@ -6,6 +6,14 @@ export class EditorStore {
    */
   @action
   public addToContainer = (widgetObj) => {
-    console.log(widgetObj)
+    this.form.push(widgetObj.widget)
   };
+
+  @observable
+  public form =observable([]);
+
+  @action
+  public setForm=(form)=>{
+    this.form=form
+  }
 }

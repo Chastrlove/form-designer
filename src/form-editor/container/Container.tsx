@@ -3,6 +3,7 @@ import * as style from "./Container.module.css";
 import { observer } from "mobx-react";
 import { DropTarget } from "react-dnd";
 import { boxTarget } from "../dragEvent/DragEvent";
+import * as _ from "lodash";
 
 const ItemTypes = {
   BOX: "box"
@@ -16,10 +17,17 @@ const ItemTypes = {
 @observer
 class Container extends React.Component<any> {
   render() {
-    const { connectDropTarget } = this.props;
+    const { connectDropTarget, store } = this.props;
+    const { form } = store;
     return (
       connectDropTarget &&
-      connectDropTarget(<div className={style.container} />)
+      connectDropTarget(
+        <div className={style.container}>
+          {_.map(form, item => {
+            return <div>{item.id}</div>;
+          })}
+        </div>
+      )
     );
   }
 }

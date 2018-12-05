@@ -22,8 +22,10 @@ const boxSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
 
+    console.log(item);
+
     if (item && item.store) {
-      item.store.leftModule.setDragEventFlag();
+      // item.store.leftModule.setDragEventFlag();
     }
 
     console.log("dropResult:", dropResult);

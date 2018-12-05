@@ -17,7 +17,7 @@ export class Editor extends React.Component<any> {
       <div className={style.editor}>
         <DragDropContextProvider backend={HTML5Backend}>
           <WidgetList store={this.store} />
-          <Container />
+          <Container store={this.store} />
         </DragDropContextProvider>
       </div>
     );

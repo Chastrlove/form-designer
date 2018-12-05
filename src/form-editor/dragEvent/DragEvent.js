@@ -4,12 +4,11 @@ export const boxTarget = (target) => {
       if (!component) {
         return;
       }
-      console.log("jinru")
+      const { canDrop, isOver } = component.props;
 
-      if (props) {
-        console.log(props);
+      const { id = "root_$_", index = 0 } = props;
 
-      }
+      return { canDrop, isOver, cuParentPath: id, index };
     },
   };
 };
