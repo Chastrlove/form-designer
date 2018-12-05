@@ -1,0 +1,13 @@
+[{
+  "schema": {
+    "title": "多行输入框",
+    "definitions": {
+
+    }
+  },
+  "uiSchema": {
+    "ui$widget": "",
+    "ui$title": "",
+    "ui$placeholder": ""
+  }
+}]
