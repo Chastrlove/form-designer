@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { DropTarget } from "react-dnd";
 import { boxTarget } from "../dragEvent/DragEvent";
 import * as _ from "lodash";
+import { RowSource } from "./RowSource";
 
 const ItemTypes = {
   BOX: "box"
@@ -18,13 +19,13 @@ const ItemTypes = {
 class Container extends React.Component<any> {
   render() {
     const { connectDropTarget, store } = this.props;
-    const { form } = store;
+    const { form,moveRow } = store;
     return (
       connectDropTarget &&
       connectDropTarget(
         <div className={style.container}>
-          {_.map(form, item => {
-            return <div>{item.id}</div>;
+          {_.map(form, (item,index) => {
+            return <RowSource rowIndex={index} content={item} moveRow={moveRow}/>;
           })}
         </div>
       )

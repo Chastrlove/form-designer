@@ -1,0 +1,12 @@
+.row{
+    background: #fff123;
+    border:1px solid #fff
+}
+
+.drop-over-downward{
+    border-bottom: 2px dashed #1890ff;
+}
+
+.drop-over-upward{
+    border-top: 2px dashed #1890ff;
+}

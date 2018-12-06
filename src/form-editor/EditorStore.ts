@@ -16,4 +16,11 @@ export class EditorStore {
   public setForm=(form)=>{
     this.form=form
   }
+
+  @action
+  public moveRow=(dragIndex,hoverIndex)=>{
+    const dragData=this.form[dragIndex];
+    this.form.splice(dragIndex,1);
+    this.form.splice(hoverIndex,0,dragData)
+  }
 }

@@ -17,12 +17,8 @@ const boxSource = {
   },
 
   endDrag(props, monitor) {
-    console.log("endDrag", `endDrag`);
-
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-
-    console.log(item);
 
     if (item && item.store) {
       // item.store.leftModule.setDragEventFlag();
@@ -43,18 +39,16 @@ const boxSource = {
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
 }))
-
 @observer
 export class Widget extends React.Component<any> {
   render() {
-    const { isDragging, connectDragSource } = this.props;
+    const { isDragging, connectDragSource, widget } = this.props;
 
     return (
       connectDragSource &&
-      connectDragSource(<div className={style.widget}>input</div>, {
+      connectDragSource(<div className={style.widget}>{widget.type}</div>, {
         dropEffect: "move"
       })
     );
   }
 }
-
