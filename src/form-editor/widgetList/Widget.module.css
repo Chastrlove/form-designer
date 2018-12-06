@@ -1,5 +1,15 @@
 .widget{
     width: 100px;
     height: 30px;
-    border: 1px solid;
+    border: 1px dashed #dddddd;
+    margin:10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widgetWrap{
+    background: #fff;
+    display: flex;
+    width:300px;
 }

@@ -7,7 +7,7 @@ import * as _ from "lodash";
 import { RowSource } from "./RowSource";
 
 const ItemTypes = {
-  BOX: "box"
+  BOX: "row"
 };
 
 @DropTarget(ItemTypes.BOX, boxTarget(), (connect, monitor) => ({
@@ -19,13 +19,13 @@ const ItemTypes = {
 class Container extends React.Component<any> {
   render() {
     const { connectDropTarget, store } = this.props;
-    const { form,moveRow } = store;
+    const { form } = store;
     return (
       connectDropTarget &&
       connectDropTarget(
         <div className={style.container}>
           {_.map(form, (item,index) => {
-            return <RowSource rowIndex={index} content={item} moveRow={moveRow}/>;
+            return <RowSource rowIndex={index} content={item} store={store}/>;
           })}
         </div>
       )

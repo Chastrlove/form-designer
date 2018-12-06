@@ -5,14 +5,14 @@ import * as style from "./Widget.module.css";
 import { DragSource } from "react-dnd";
 
 const ItemTypes = {
-  BOX: "box"
+  BOX: "row"
 };
 
 const boxSource = {
   beginDrag(props) {
     return {
       widget: props.widget,
-      store: props.store
+      type:'outWidget',
     };
   },
 

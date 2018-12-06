@@ -2,6 +2,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { DragSource, DropTarget } from "react-dnd";
 import * as style from "./RowSource.module.css";
+import * as _ from "lodash";
 
 function dragDirection(
   dragIndex,
@@ -10,7 +11,10 @@ function dragDirection(
   clientOffset,
   sourceClientOffset
 ) {
-  const hoverMiddleY = (initialClientOffset.y - sourceClientOffset.y) / 2;
+  if (_.isUndefined(dragIndex)) {
+    return "downward";
+  }
+  const hoverMiddleY = initialClientOffset.y - sourceClientOffset.y;
   const hoverClientY = clientOffset.y - sourceClientOffset.y;
   if (dragIndex < hoverIndex && hoverClientY > hoverMiddleY) {
     return "downward";
@@ -23,15 +27,23 @@ function dragDirection(
 const rowSource = {
   beginDrag(props) {
     return {
-      index: props.rowIndex
+      index: props.rowIndex,
+      type: "innerWidget",
+      widget: props.content
     };
   }
 };
 
 const rowTarget = {
   drop(props, monitor) {
-    const dragIndex = monitor.getItem().index;
+    const { index: dragIndex, type, widget } = monitor.getItem();
     const hoverIndex = props.rowIndex;
+    const { store } = props;
+    if (!dragIndex && type === "outWidget") {
+      console.log("拖进field");
+      store.AddInnerRow(hoverIndex, widget);
+      return;
+    }
 
     // Don't replace items with themselves
     if (dragIndex === hoverIndex) {
@@ -39,7 +51,7 @@ const rowTarget = {
     }
 
     // Time to actually perform the action
-    props.moveRow(dragIndex, hoverIndex);
+    store.moveRow(dragIndex, hoverIndex);
 
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
@@ -66,16 +78,16 @@ export class RowSource extends React.Component<any> {
     const {
       connectDragSource,
       connectDropTarget,
-      content,
       dragRow,
       clientOffset,
       sourceClientOffset,
       isOver,
+      content,
       initialClientOffset,
       ...restProps
     } = this.props;
 
-    let className = restProps.className || '' ;
+    let className = restProps.className || "";
     if (isOver && initialClientOffset) {
       const direction = dragDirection(
         dragRow.index,
@@ -85,16 +97,16 @@ export class RowSource extends React.Component<any> {
         sourceClientOffset
       );
       if (direction === "downward") {
-        className = style['drop-over-downward'];
+        className = style["drop-over-downward"];
       }
       if (direction === "upward") {
-        className = style['drop-over-upward'];
+        className = style["drop-over-upward"];
       }
     }
 
     return connectDragSource(
       connectDropTarget(
-        <div className={style.row + ' ' + className}>{content.id}</div>
+        <div className={style.row + " " + className}>{content.id}</div>
       )
     );
   }
